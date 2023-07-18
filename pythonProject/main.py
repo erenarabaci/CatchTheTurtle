@@ -4,10 +4,20 @@ import time
 board = turtle.Screen()
 board.bgcolor("black")
 board.title("CatchTheTurtle")
+########score string#######
+score=turtle.Turtle()
+score.color("Green")
+score.hideturtle()
+score.penup()
+score.goto(-140,320)
+score.write("Score :",font=("Courier",24,"normal"))
+
+
+
 
 ################# geri sayım#############
 sayac = turtle.Turtle()
-sayac.speed(1000)
+sayac.speed(200000)
 sayac.color("red")
 sayac.penup()
 sayac.hideturtle()
@@ -34,7 +44,7 @@ for i in range(30, -1, -1):
 
 
 
-cursor = turtle.Turtle()
+
 turtle.mainloop()
 
 
