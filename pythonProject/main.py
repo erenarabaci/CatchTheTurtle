@@ -1,130 +1,80 @@
 import turtle
 import time
 import random
-import threading
 
 board = turtle.Screen()
+board.title("Catch The Turtle")
 board.bgcolor("black")
-board.title("CatchTheTurtle")
+score = 0
+font = ("Courier", 24, "normal")
 
+turtle.tracer(0)
 
+# Score Yazısı
+scorewrite = turtle.Turtle()
+scorewrite.penup()
+scorewrite.hideturtle()
+scorewrite.color("red")
+scorewrite.goto(0, 350)
+scorewrite.write(arg=f"Score : {score}", align="center", move=False, font=font)
 
+# Sayac yazısı
+countdown = turtle.Turtle()
+countdown.penup()
+countdown.hideturtle()
+countdown.color("blue")
+countdown.goto(0, 300)
 
-xcolors=["red","blue","yellow","purple","pink","SpringGreen","WhiteSmoke","turquoise","orange","maroon"]
-
-
-
-
+# Kaçan Kaplumbağa
 x = turtle.Turtle()
-x.shape("turtle")
-x.color("yellow")
-x.hideturtle()
 x.penup()
-def randommoves():
-    for run in range(15):
-        a = random.randint(-200,200)
-        b = random.randint(-200,200)
+x.shape("turtle")
+x.shapesize(2, 2, 1)
+x.color("turquoise")
+x.hideturtle()
+
+####Ekrana oyun bitti yazdırma###
+
+finish = turtle.Turtle()
+finish.penup()
+finish.color("purple")
+finish.hideturtle()
 
 
-        x.goto(a,b)
-        x.showturtle()
-        time.sleep(1)
+
+
+def handle_click(x, y):
+    global score
+    score += 1
+    scorewrite.clear()
+    scorewrite.write(arg=f"Score : {score}", align="center", move=False, font=font)
+
+
+for i in range(30, -1, -1):
+    countdown.clear()
+    countdown.write(arg=i, move=False, align="center", font=font)
+    a = random.randint(-200, 200)
+    b = random.randint(-200, 200)
+    x.goto(a, b)
+    x.showturtle()
+    x.onclick(handle_click)
+    board.update()
+    time.sleep(1)
+    x.hideturtle()
+    if i == 0 :
+        board.clear()
+        board.bgcolor("black")
         x.hideturtle()
-
-
-
-
-
-########score string#######
-score=turtle.Turtle()
-score.color("Green")
-score.hideturtle()
-score.penup()
-score.goto(-140,320)
-score.write("Score :",font=("Courier",24,"normal"))
-
-
-
-
-################# geri sayım#############
-sayac = turtle.Turtle()
-sayac.speed(200000)
-sayac.color("red")
-sayac.penup()
-sayac.hideturtle()
-sayac.goto(20,350)
-sayac.color("red")
-########## Sayaç Stringi #############
-
-sayacstring = turtle.Turtle()
-sayacstring.hideturtle()
-sayacstring.color("red")
-sayacstring.penup()
-sayacstring.goto(-140,350)
-sayacstring.write("Sayaç :",font=("Courier",24,"normal"))
-sayacstring.color("black")
-
-
-def countdown():
-    for i in range(30, -1, -1):
-        sayac.clear()  # Önceki sayıyı temizle
-        sayac.write(i, align="center", font=("Courier", 24, "normal"))
-        time.sleep(1)  # 1 saniye bekle
-
-
-thread1 = threading.Thread(target=randommoves())
-thread2 = threading.Thread(target=countdown())
-thread1.start()
-thread2.start()
-
-thread1.join()
-thread2.join()
-
-
-#########Kaplumbağa yakalama###############
+        countdown.hideturtle()
+        scorewrite.hideturtle()
+        x.clear()
+        countdown.clear()
+        scorewrite.clear()
+        finish.write(arg=f"Game Finished\n Your Score: {score}",move=False,align="center",font=font)
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-turtle.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-board.done()
+board.mainloop()
